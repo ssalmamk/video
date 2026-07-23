@@ -8,17 +8,24 @@
     <body>
        
        <video id="vid" src="test.mp4" width="400" poster="test.jpg" ></video>
-       
+       <br>
        <button id="play">Play</button>
+       <br>
        <button id="pause">Pause</button>
+       <br>
        <button id="mute">mute</button>
+       <input id="volume" type="range" min="0" max="1" step="0.1" value="1">
+       <br><br>
+
        <button id="backwards">backward 10s</button>
        <button id="forwards"> 10s forward</button>
 
 
 
 
-       <input id="volume" type="range" min="0" max="1" step="0.1" value="1">
+       
+       <br><br>
+       <input id="progress" type="range" min="0" value="0">
 
 
        <select id="speed">
@@ -75,6 +82,20 @@ vid.addEventListener("timeupdate", function () {
     document.getElementById("time").textContent =
         formatTime(vid.currentTime) + " / " +
         formatTime(vid.duration);
+});
+
+const progress = document.getElementById("progress");
+
+vid.addEventListener("loadedmetadata", function () {
+    progress.max = vid.duration;
+});
+
+vid.addEventListener("timeupdate", function () {
+    progress.value = vid.currentTime;
+});
+
+progress.addEventListener("input", function () {
+    vid.currentTime = this.value;
 });
 
 
