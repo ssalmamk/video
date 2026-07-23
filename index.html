@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content ="width=device-width, initial-scale=1.0"/>
+        <title>video</title>
+    </head>
+    <body>
+       
+       <video id="vid" src="test.mp4" width="400" poster="test.jpg" ></video>
+       
+       <button id="play">Play</button>
+       <button id="pause">Pause</button>
+       <button id="mute">mute</button>
+       <button id="backwards">backward 10s</button>
+       <button id="forwards"> 10s forward</button>
+
+
+
+
+       <input id="volume" type="range" min="0" max="1" step="0.1" value="1">
+
+
+       <select id="speed">
+        <option value="0.25">0.25</option>
+        <option value="0.5">0.5x</option>
+        <option value="0.75">0.75x</option>
+        <option value="1" selected>1x</option>
+       </select>
+
+       <span id="time">00:00:00 / 00:00:00</span>
+
+    
+
+              <!--Java script-->
+
+       
+        <script>
+
+const speed = document.getElementById("speed");
+
+speed.addEventListener("change", function () {
+    vid.playbackRate = Number(this.value);
+});
+
+
+
+            
+
+            var vid=document.getElementById("vid");
+            document.getElementById("play").addEventListener("click", function(){
+
+                vid.play();
+            });
+
+            document.getElementById("pause").addEventListener("click", function(){
+
+                vid.pause();
+            });
+
+
+function formatTime(time) {
+let h = Math.floor(time / 3600);
+let m = Math.floor((time % 3600) / 60);
+let s = Math.floor(time % 60);
+
+    h = String(h).padStart(2, "0");
+    m = String(m).padStart(2, "0");
+    s = String(s).padStart(2, "0");
+
+    return `${h}:${m}:${s}`;
+}
+
+vid.addEventListener("timeupdate", function () {
+    document.getElementById("time").textContent =
+        formatTime(vid.currentTime) + " / " +
+        formatTime(vid.duration);
+});
+
+
+document.getElementById("mute").addEventListener("click", function(){
+    vid.muted=!vid.muted;
+if(vid.muted){
+    volume.value=0;
+    vid.volume=0;
+
+}
+else{
+    volume.value=1;
+    vid.volume=1;
+}
+
+});
+
+
+document.getElementById("backwards").addEventListener("click", function(){
+    vid.currentTime -=10;
+});
+
+
+document.getElementById("forwards").addEventListener("click", function(){
+    vid.currentTime +=10;
+
+
+});
+
+
+            const video= document.getElementById("vid");
+            const volume= document.getElementById("volume");
+
+            volume.addEventListener("input", function(){
+
+                vid.volume=this.value;
+            });
+
+
+
+
+
+
+
+
+        </script>
+
+
+
+
+
+    </body>
+</html>
